@@ -251,6 +251,370 @@
 
     <div class="moon-bg"></div>
 
+    <!-- YouTube Player Tersembunyi (Putar Full Song di Latar Belakang) -->
+    <div id="yt-player" style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none;"></div>
+
+    <div class="card">
+        <!-- Tombol On/Off Musik di Sudut Atas Kartu -->
+        <button class="audio-toggle-btn" id="audioToggleBtn" title="Play/Pause Musik">
+            <i class="ri-volume-mute-line" id="audioIcon"></i>
+        </button>
+
+        <!-- Foto Profil -->
+        <div class="profile-wrapper">
+            <img src="moon.jpg" alt="Sergio Fransisco Sakunab" class="profile-img">
+            <div class="crescent-badge">
+                <i class="ri-moon-clear-fill"></i>
+            </div>
+        </div>
+        
+        <!-- Informasi Diri -->
+        <h1>Sergio Fransisco Sakunab</h1>
+        <div class="alter-ego">Desainer / Gamers</div>
+        
+        <p class="bio">
+            "Embrace the chaos." Menyukai dunia pemrograman di siang hari, dan bertransformasi menjadi penikmat kultur pop serta musik sinematik di malam hari di bawah perlindungan Khonshu.
+        </p>
+
+        <!-- Tautan Sosial Media -->
+        <div class="social-container">
+            <a href="https://www.instagram.com/g10_g0ri0/" target="_blank" class="social-btn" title="Instagram">
+                <i class="ri-instagram-line"></i>
+            </a>
+            <a href="https://www.tiktok.com/@g10wayn3?_r=1&_t=ZS-99yU108UbmH" target="_blank" class="social-btn" title="TikTok">
+                <i class="ri-tiktok-fill"></i>
+            </a>
+        </div>
+
+        <!-- Bagian Widget Spotify -->
+        <div class="music-card">
+            <div class="music-title">
+                <i class="ri-music-2-line"></i> Current Theme
+            </div>
+            <iframe src="https://open.spotify.com/embed/track/4cBm8rv2B5BJWU2pDaHVbF?utm_source=generator" 
+                    width="100%" 
+                    height="80" 
+                    frameBorder="0" 
+                    allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Script YouTube IFrame Player API untuk Full Song & Autoplay -->
+    <script>
+        var player;
+        var isPlaying = false;
+        const toggleBtn = document.getElementById('audioToggleBtn');
+        const icon = document.getElementById('audioIcon');
+
+        // Memuat Script API YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Menyiapkan Player YouTube
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0',
+                width: '0',
+                videoId: 'fA4uUInSg1g', // ID Video "A Man Without Love"
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'fA4uUInSg1g'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Autoplay lagu penuh begitu pengunjung pertama kali klik di layar
+            document.addEventListener('click', function() {
+                if (!isPlaying && player) {
+                    player.playVideo();
+                    isPlaying = true;
+                    icon.className = 'ri-volume-up-line';
+                }
+            }, { once: true });
+        }
+
+        // Fitur Tombol Play / Pause On-Click
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (player && typeof player.playVideo === 'function') {
+                if (isPlaying) {
+                    player.pauseVideo();
+                    isPlaying = false;
+                    icon.className = 'ri-volume-mute-line';
+                } else {
+                    player.playVideo();
+                    isPlaying = true;
+                    icon.className = 'ri-volume-up-line';
+                }
+            }
+        });
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summon the Suit | Perkenalan Diri</title>
+    
+    <!-- Google Fonts: Poppins & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #1c2630 0%, #0b0f14 70%);
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+
+        /* Efek Bulan dengan Animasi Pulse di Latar Belakang */
+        .moon-bg {
+            position: absolute;
+            top: -100px;
+            width: 300px;
+            height: 300px;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            animation: moonGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes moonGlow {
+            0% { transform: scale(1); opacity: 0.12; }
+            100% { transform: scale(1.15); opacity: 0.22; }
+        }
+
+        /* Kartu Utama dengan Efek Interaktif Hover */
+        .card {
+            background: rgba(15, 22, 30, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Hover Effect pada Card */
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 50px rgba(255, 255, 255, 0.12), inset 0 0 25px rgba(255, 255, 255, 0.04);
+        }
+
+        /* Foto Profil dengan Pendaran Animasi Khonshu */
+        .profile-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 18px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .profile-img {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Badge Bulan Sabit */
+        .crescent-badge {
+            position: absolute;
+            bottom: 0;
+            right: 2px;
+            background: #fff;
+            color: #0b0f14;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .crescent-badge {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* Tipografi */
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .alter-ego {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 16px;
+        }
+
+        .bio {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.55;
+            margin-bottom: 22px;
+            font-weight: 300;
+        }
+
+        /* Sosial Media Buttons */
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.25rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: #ffffff;
+            color: #0b0f14;
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Tombol Floating Kontrol Musik Toggle */
+        .audio-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .audio-toggle-btn:hover {
+            background: #ffffff;
+            color: #0b0f14;
+            transform: scale(1.1);
+        }
+
+        /* Bagian Musik (Spotify) */
+        .music-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+        }
+
+        .music-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        iframe {
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* Responsif Layar Kecil */
+        @media (max-width: 360px) {
+            .card { padding: 22px 15px; }
+            .profile-wrapper { width: 100px; height: 100px; }
+            h1 { font-size: 1.35rem; }
+            .bio { font-size: 0.8rem; }
+            .social-btn { width: 38px; height: 38px; font-size: 1.1rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .card { max-width: 440px; padding: 35px 28px; }
+            .profile-wrapper { width: 130px; height: 130px; }
+            h1 { font-size: 1.75rem; }
+            .bio { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="moon-bg"></div>
+
     <!-- Audio Player Tersembunyi untuk MP3 Lokal -->
     <audio id="bg-music" src="multo.mp3" loop></audio>
 
