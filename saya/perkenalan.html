@@ -2,6 +2,251 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summon the Suit | Perkenalan Diri</title>
+    
+    <!-- Google Fonts: Poppins & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #1c2630 0%, #0b0f14 70%);
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Efek Bulan di Latar Belakang */
+        .moon-bg {
+            position: absolute;
+            top: -100px;
+            width: 300px;
+            height: 300px;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Kartu Utama Tema Moon Knight */
+        .card {
+            background: rgba(15, 22, 30, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 35px 25px;
+            width: 100%;
+            max-width: 430px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Foto Profil dengan Pendaran Khonshu */
+        .profile-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Logo Bulan Sabit Kecil di Atas Foto */
+        .crescent-badge {
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+            background: #fff;
+            color: #0b0f14;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Tipografi ala Mesir/Marvel */
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            margin-bottom: 4px;
+        }
+
+        .alter-ego {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .bio {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        /* Sosial Media Buttons */
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: #ffffff;
+            color: #0b0f14;
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Bagian Musik (Spotify) */
+        .music-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+        }
+
+        .music-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        iframe {
+            border-radius: 12px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="moon-bg"></div>
+
+    <!-- Audio Player Tersembunyi untuk Autoplay Lokal (Opsi) -->
+    <audio id="bg-music" src="a-man-without-love.mp3" loop></audio>
+
+    <div class="card">
+        <!-- Foto Profil -->
+        <div class="profile-wrapper">
+            <img src="moon.jpg" alt="Sergio Fransisco Sakunab" class="profile-img">
+            <div class="crescent-badge">
+                <i class="ri-moon-clear-fill"></i>
+            </div>
+        </div>
+        
+        <!-- Informasi Diri -->
+        <h1>Sergio Fransisco Sakunab</h1>
+        <div class="alter-ego">Desainer / Gamers</div>
+        
+        <p class="bio">
+            "Embrace the chaos." Menyukai dunia pemrograman di siang hari, dan bertransformasi menjadi penikmat kultur pop serta musik sinematik di malam hari di bawah perlindungan Khonshu.
+        </p>
+
+        <!-- Tautan Sosial Media -->
+        <div class="social-container">
+            <a href="https://www.instagram.com/g10_g0ri0/" target="_blank" class="social-btn" title="Instagram">
+                <i class="ri-instagram-line"></i>
+            </a>
+            <a href="https://www.tiktok.com/@g10wayn3?_r=1&_t=ZS-99yU108UbmH" target="_blank" class="social-btn" title="TikTok">
+                <i class="ri-tiktok-fill"></i>
+            </a>
+        </div>
+
+        <!-- Bagian Lagu Pilihan (Spotify Embed Resmi) -->
+        <div class="music-card">
+            <div class="music-title">
+                <i class="ri-music-2-line"></i> Current Theme
+            </div>
+            <!-- Link Spotify diperbaiki ke format embed resmi -->
+            <iframe src="https://open.spotify.com/embed/track/4cBm8rv2B5BJWU2pDaHVbF?utm_source=generator" 
+                    width="100%" 
+                    height="80" 
+                    frameBorder="0" 
+                    allowfullscreen="" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Script Autoplay saat Pengunjung Mengeklik Layar Pertama Kali -->
+    <script>
+        document.addEventListener('click', function() {
+            var audio = document.getElementById('bg-music');
+            if (audio && audio.paused) {
+                audio.play().catch(function(error) {
+                    console.log("Autoplay terhalang browser: ", error);
+                });
+            }
+        }, { once: true });
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
     <!-- Viewport ketat untuk mencegah zoomout/geser di HP -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Summon the Suit | Perkenalan Diri</title>
